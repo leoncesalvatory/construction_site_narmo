@@ -1,0 +1,59 @@
+{% extends 'core/templates/base.html' %}
+{% load project_filters %}
+{% block title %}Projects & Portfolio{% endblock %}
+{% load project_filters %}
+
+{% block meta %}
+<meta name="description" content="View our completed and ongoing road, building, and infrastructure construction projects.">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="text-white text-center py-5" style="
+    background: linear-gradient(rgba(0, 31, 63, 0.75), rgba(0, 31, 63, 0.75)), 
+                url('{% if company.about_hero_image %}{{ company.about_hero_image.url }}{% else %}https://via.placeholder.com/1920x1080/003366/ffffff?text=About+Us+Background{% endif %}') 
+                no-repeat center center/cover;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+">
+    <div class="container">
+        <h1 class="display-3 fw-bold">Our Projects</h1>
+        <p class="lead mt-3">Proof of our expertise and commitment to excellence.</p>
+    </div>
+</section>
+
+<div class="container my-5">
+    <!-- Category Filters (Bootstrap Tabs) -->
+    <ul class="nav nav-pills justify-content-center mb-5" id="projectTabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="pill" href="#all">All Projects</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="pill" href="#roads">Roads</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="pill" href="#buildings">Buildings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="pill" href="#infrastructure">Infrastructure</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="all">
+            {% include 'core/templates/projects_grid.html' with projects=projects %}
+        </div>
+        <div class="tab-pane fade" id="roads">
+            {% include 'core/templates/projects_grid.html' with projects=projects|filter_category:'roads' %}
+        </div>
+        <div class="tab-pane fade" id="buildings">
+            {% include 'core/templates/projects_grid.html' with projects=projects|filter_category:'buildings' %}
+        </div>
+        <div class="tab-pane fade" id="infrastructure">
+            {% include 'core/templates/projects_grid.html' with projects=projects|filter_category:'infrastructure' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

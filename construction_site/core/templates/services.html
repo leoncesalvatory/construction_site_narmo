@@ -1,0 +1,51 @@
+{% extends 'core/templates/base.html' %}
+{% block title %}Our Services{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Professional road construction, building construction, civil works, drainage, bridges, and maintenance services.">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+
+<section class="text-white text-center py-5" style="
+    background: linear-gradient(rgba(0, 31, 63, 0.75), rgba(0, 31, 63, 0.75)), 
+                url('{% if company.about_hero_image %}{{ company.about_hero_image.url }}{% else %}https://via.placeholder.com/1920x1080/003366/ffffff?text=About+Us+Background{% endif %}') 
+                no-repeat center center/cover;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+">
+    <div class="container">
+        <h1 class="display-3 fw-bold">Our Services</h1>
+        <p class="lead mt-3">Delivering high-quality construction solutions with safety and durability in mind.</p>
+    </div>
+</section>
+
+<div class="container my-5">
+    <div class="row">
+        {% for service in services %}
+        <div class="col-lg-6 mb-5">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="row g-0">
+                    <div class="col-md-5">
+                        <img src="{{ service.image.url }}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="{{ service.title }}">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title">{{ service.title }}</h3>
+                            <p class="card-text flex-grow-1">{{ service.description }}</p>
+                            {% if service.benefits %}
+                            <p class="text-muted"><strong>Benefits:</strong> {{ service.benefits }}</p>
+                            {% endif %}
+                            <a href="{% url 'contact' %}" class="btn btn-primary mt-auto">Request Quote</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

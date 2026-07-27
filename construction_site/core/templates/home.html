@@ -1,0 +1,61 @@
+{% extends 'core/templates/base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="text-white text-center py-5" style="
+    background: linear-gradient(rgba(0, 31, 63, 0.7), rgba(0, 31, 63, 0.7)), 
+                url('{% if company.hero_image %}{{ company.hero_image.url }}{% else %}https://via.placeholder.com/1920x1080{% endif %}') 
+                no-repeat center center/cover;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+">
+    <div class="container">
+        <h1 class="display-4 fw-bold">{{ company.tagline }}</h1>
+        <p class="lead my-4">Professional road and building construction services</p>
+        <a href="{% url 'contact' %}" class="btn btn-light btn-lg mx-2">Request a Quote</a>
+        <a href="{% url 'projects' %}" class="btn btn-outline-light btn-lg mx-2">View Our Projects</a>
+    </div>
+</section>
+
+<!-- Introduction -->
+<div class="container my-5">
+    <p>{{ company.intro_text }}</p>
+</div>
+
+<!-- Key Services Preview -->
+<div class="container my-5">
+    <h2>Our Services</h2>
+    <div class="row">
+        {% for service in services %}
+        <div class="col-md-3">
+            <div class="card">
+                <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.title }}">
+                <div class="card-body">
+                    <h5>{{ service.title }}</h5>
+                    <a href="{% url 'services' %}#{{ service.slug }}" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Highlights -->
+<div class="bg-light py-5 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"><h3>{{ company.years_experience }}</h3><p>Years Experience</p></div>
+            <div class="col-md-4"><h3>{{ company.completed_projects }}</h3><p>Completed Projects</p></div>
+            <!-- Add more -->
+        </div>
+    </div>
+</div>
+
+<!-- Trust Section -->
+<div class="container my-5">
+    <h2>Why Trust Us?</h2>
+    <p>Emphasis on safety, quality, and workmanship.</p> <!-- Pull from company if needed -->
+</div>
+{% endblock %}

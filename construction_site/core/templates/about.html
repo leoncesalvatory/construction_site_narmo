@@ -1,0 +1,119 @@
+{% extends 'core/templates/base.html' %}
+{% block title %}About Us{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Learn about our construction company's history, mission, values, certifications, and expert team.">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section with Transparent Background Image -->
+<section class="text-white text-center py-5" style="
+    background: linear-gradient(rgba(0, 31, 63, 0.75), rgba(0, 31, 63, 0.75)), 
+                url('{% if company.about_hero_image %}{{ company.about_hero_image.url }}{% else %}https://via.placeholder.com/1920x1080/003366/ffffff?text=About+Us+Background{% endif %}') 
+                no-repeat center center/cover;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+">
+    <div class="container">
+        <h1 class="display-3 fw-bold">About Us</h1>
+        <p class="lead mt-3">Building trust through excellence in construction since day one.</p>
+    </div>
+</section>
+
+<div class="container my-5">
+    <!-- Company Background -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h2 class="mb-4">Our Background</h2>
+            <p class="lead">{{ company.history|linebreaks }}</p>
+        </div>
+    </div>
+
+    <!-- Mission & Vision -->
+    <div class="row mb-5 g-4">
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm bg-light">
+                <div class="card-body text-center p-5">
+                    <h3 class="card-title text-success fw-bold mb-4">Our Mission</h3>
+                    <p class="card-text fs-5">{{ company.mission|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm bg-light">
+                <div class="card-body text-center p-5">
+                    <h3 class="card-title text-success fw-bold mb-4">Our Vision</h3>
+                    <p class="card-text fs-5">{{ company.vision|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Values -->
+    <div class="text-center mb-5 py-5 bg-light rounded-3">
+        <h2 class="mb-5">Our Core Values</h2>
+        <div class="row">
+            {% with values=company.core_values.splitlines %}
+                {% for value in values %}
+                    {% if value.strip %}
+                    <div class="col-md-4 mb-4">
+                        <h5 class="text-success fw-bold">{{ value.strip }}</h5>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <!-- Certifications -->
+    {% if certifications %}
+    <div class="text-center mb-5">
+        <h2 class="mb-5">Certifications & Licenses</h2>
+        <div class="row g-4">
+            {% for cert in certifications %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    {% if cert.image %}
+                    <img src="{{ cert.image.url }}" class="card-img-top" alt="{{ cert.name }}" style="height: 200px; object-fit: contain; background-color: #f8f9fa;">
+                    {% endif %}
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-success">{{ cert.name }}</h5>
+                        <p class="card-text text-muted">{{ cert.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Team -->
+    {% if team %}
+    <div class="py-5">
+        <h2 class="text-center mb-5">Meet Our Team</h2>
+        <div class="row g-4">
+            {% for member in team %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0 text-center">
+                    {% if member.photo %}
+                    <img src="{{ member.photo.url }}" class="rounded-circle mx-auto mt-4" style="width: 160px; height: 160px; object-fit: cover; border: 5px solid #0be309;" alt="{{ member.name }}">
+                    {% else %}
+                    <div class="bg-light rounded-circle mx-auto mt-4 d-flex align-items-center justify-content-center" style="width: 160px; height: 160px;">
+                        <i class="bi bi-person-fill text-muted fs-1"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title text-success">{{ member.name }}</h5>
+                        <p class="text-muted fst-italic">{{ member.title }}</p>
+                        <p class="card-text">{{ member.description|linebreaks }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'core/templates/base.html' %}
+{% block title %}Contact Us{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Get in touch for quotes, inquiries, or partnerships. Contact our construction company today.">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<!-- <section class="bg-primary text-white text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Contact Us</h1>
+        <p class="lead">We're here to discuss your next project.</p>
+    </div>
+</section> -->
+<section class="text-white text-center py-5" style="
+    background: linear-gradient(rgba(0, 31, 63, 0.75), rgba(0, 31, 63, 0.75)), 
+                url('{% if company.about_hero_image %}{{ company.about_hero_image.url }}{% else %}https://via.placeholder.com/1920x1080/003366/ffffff?text=About+Us+Background{% endif %}') 
+                no-repeat center center/cover;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+">
+    <div class="container">
+        <h1 class="display-3 fw-bold">Contact Us</h1>
+        <p class="lead mt-3">We're here to discuss your next project.</p>
+    </div>
+</section>
+
+<div class="container my-5">
+    <div class="row">
+        <!-- Contact Form - Fully Styled with Bootstrap -->
+         
+        <div class="col-lg-6 mb-5">
+            <h3 class="mb-4 text-primary fw-bold">Send us a Message</h3>
+            <div class="bg-white p-4 p-md-5 rounded-3 shadow-lg border-0">
+                {% if messages %}
+<div class="alert-container mt-4">
+    {% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label for="{{ form.name.id_for_label }}" class="form-label fw-semibold text-dark">Full Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control form-control-lg rounded-pill border-2" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" placeholder="Enter your full name" required>
+                        {% if form.name.errors %}
+                            <div class="text-danger small mt-2">{{ form.name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.email.id_for_label }}" class="form-label fw-semibold text-dark">Email Address <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control form-control-lg rounded-pill border-2" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}" placeholder="your@email.com" required>
+                        {% if form.email.errors %}
+                            <div class="text-danger small mt-2">{{ form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.phone.id_for_label }}" class="form-label fw-semibold text-dark">Phone Number</label>
+                        <input type="text" class="form-control form-control-lg rounded-pill border-2" name="{{ form.phone.name }}" id="{{ form.phone.id_for_label }}" placeholder="+255 ...">
+                        {% if form.phone.errors %}
+                            <div class="text-danger small mt-2">{{ form.phone.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.message.id_for_label }}" class="form-label fw-semibold text-dark">Message <span class="text-danger">*</span></label>
+                        <textarea class="form-control form-control-lg rounded-3 border-2" name="{{ form.message.name }}" id="{{ form.message.id_for_label }}" rows="6" placeholder="Tell us about your project..." required></textarea>
+                        {% if form.message.errors %}
+                            <div class="text-danger small mt-2">{{ form.message.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-grid mt-5">
+                        <button type="submit" class="btn btn-lg fw-bold text-white shadow-sm" style="background-color: #0be309; border: none; border-radius: 50px; padding: 15px;">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="col-lg-6">
+            <h3>Contact Information</h3>
+            <ul class="list-unstyled">
+                <li class="mb-3"><strong>Phone:</strong> {{ contact_info.phone }}</li>
+                <li class="mb-3"><strong>Email:</strong> <a href="mailto:{{ contact_info.email }}">{{ contact_info.email }}</a></li>
+                <li class="mb-3"><strong>Address:</strong><br>{{ contact_info.address|linebreaks }}</li>
+                <li class="mb-3"><strong>Working Hours:</strong> {{ contact_info.working_hours }}</li>
+            </ul>
+
+            {% if contact_info.whatsapp_number %}
+            <a href="https://wa.me/{{ contact_info.whatsapp_number }}" target="_blank" class="btn btn-success btn-lg mb-4">
+                Chat on WhatsApp
+            </a>
+            {% endif %}
+
+            {% if contact_info.google_maps_embed %}
+            <h4 class="mt-4">Our Location</h4>
+            <div class="ratio ratio-16x9">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63074.157931656344!2d33.48904485539488!3d-8.867034242379205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19009d883333160d%3A0x6d98016afafa5e73!2sNsalaga!5e0!3m2!1sen!2stz!4v1766049824559!5m2!1sen!2stz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
